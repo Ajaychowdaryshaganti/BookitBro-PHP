@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="fast2sms" content="YkWh9g1UTQPoFD7h9MvC0XAvJSpiM2pk">
+  <link rel="icon" href="/favicon.ico" type="image/x-icon">
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+  <title>BookItBro - Home</title>
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <nav class="navbar">
+    <div class="nav-brand">
+      <img src="img/clock.png" alt="BookItBro Logo" class="nav-logo">
+      <span class="nav-app-title">BookItBro</span>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+      <span class="hamburger"></span>
+      <span class="hamburger"></span>
+      <span class="hamburger"></span>
+    </button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="login.php">Login</a></li>
+      <li><a href="signup.php">Signup</a></li>
+	  <li><a href="businesses/login.php">Business Login</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </nav>
+
+
+
+<main class="main-content">
+  <form class="search-form" autocomplete="off">
+    <input type="text" id="search" name="search" placeholder="Search by name or location" class="search-input">
+    <button type="submit" class="search-btn">Search</button>
+  </form>
+  <button class="location-btn" onclick="getLocation()">Use My Location</button>
+  <div id="search-results" class="search-results">
+    <!-- Search results will appear here -->
+  </div>
+  
+  <div class="business-cta">
+    <p>Are you a Business owner?</p>
+    <a href="businesses/signup.php" class="business-link">Add your Business</a>
+  </div>
+</main>
+
+  <footer class="footer">
+    <p>&copy; 2025 BookItBro. All rights reserved.</p>
+  </footer>
+
+  <script src="app.js"></script>
+  <script>
+    // Hamburger menu toggle
+    document.getElementById('navToggle').addEventListener('click', function() {
+      document.getElementById('navLinks').classList.toggle('nav-active');
+      this.classList.toggle('open');
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>BookItBro - Contact</title>
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <nav class="navbar">
+    <div class="nav-brand">
+      <img src="img/clock.png" alt="BookItBro Logo" class="nav-logo">
+      <span class="nav-app-title">BookItBro</span>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+      <span class="hamburger"></span>
+      <span class="hamburger"></span>
+      <span class="hamburger"></span>
+    </button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="login.html">Login</a></li>
+      <li><a href="signup.php">Signup</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </nav>
+
+  <main class="main-content">
+    <h2 class="form-title">Contact Us</h2>
+    <form class="form-box" autocomplete="off">
+      <label for="contact-name">Name</label>
+      <input type="text" id="contact-name" name="contact-name" required>
+
+      <label for="contact-info">Contact (Email or Mobile)</label>
+      <input type="text" id="contact-info" name="contact-info" required>
+
+      <label for="contact-reason">Reason / Feedback</label>
+      <textarea id="contact-reason" name="contact-reason" rows="4" required></textarea>
+
+      <button type="submit" class="form-btn">Send</button>
+    </form>
+  </main>
+
+  <footer class="footer">
+    <p>&copy; 2024 BookItBro. All rights reserved.</p>
+  </footer>
+  <script>
+    document.getElementById('navToggle').addEventListener('click', function() {
+      document.getElementById('navLinks').classList.toggle('nav-active');
+      this.classList.toggle('open');
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,999 @@
+:root {
+  --primary: #181c4f;
+  --accent: #ff9c3f;
+  --muted: #6e8b8b;
+  --background: #eaeaea;
+  --widget-bg: #fff;
+  --text: #181c4f;
+  --success: #38b000;
+  --error: #d90429;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Roboto', sans-serif;
+  background: var(--background);
+  color: var(--text);
+}
+
+.dashboard-container {
+  display: flex;
+  min-height: 100vh;
+  background: var(--background);
+}
+
+.sidebar {
+  width: 80px;
+  background: var(--primary);
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem 0;
+  transition: width 0.2s;
+  position: relative;
+  z-index: 10;
+}
+
+.sidebar .logo {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 2rem;
+  color: var(--accent);
+  letter-spacing: 2px;
+}
+
+.sidebar nav {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  align-items: center;
+  width: 100%;
+}
+
+.sidebar nav a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  opacity: 0.8;
+  transition: opacity 0.2s, background 0.2s;
+  padding: 0.5rem 0;
+  width: 100%;
+  border-left: 4px solid transparent;
+}
+
+.sidebar nav a.active,
+.sidebar nav a:hover {
+  opacity: 1;
+  background: var(--accent);
+  color: var(--primary);
+  border-left: 4px solid var(--accent);
+}
+
+.sidebar nav a span {
+  font-size: 0.7rem;
+  margin-top: 0.2rem;
+  letter-spacing: 1px;
+}
+
+.sidebar .logout {
+  margin: 2rem 0 0 0;
+  background: var(--accent);
+  color: var(--primary);
+  border: none;
+  border-radius: 50%;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.sidebar .logout:hover {
+  background: #fff;
+  color: var(--error);
+}
+
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.topbar {
+  background: #fff;
+  padding: 1rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #e0e0e0;
+  position: sticky;
+  top: 0;
+  z-index: 5;
+}
+
+.topbar .business-title {
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+}
+
+.topbar .business-title i {
+  color: var(--accent);
+  font-size: 1.5rem;
+}
+
+.topbar .quick-actions {
+  display: flex;
+  gap: 1rem;
+}
+
+.topbar .quick-actions button {
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  padding: 0.5rem 1.2rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: background 0.2s;
+}
+
+.topbar .quick-actions button:hover {
+  background: var(--accent);
+  color: var(--primary);
+}
+
+.dashboard-widgets {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 2rem;
+  padding: 2rem;
+}
+
+.widget {
+  background: var(--widget-bg);
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(74, 78, 105, 0.07);
+  padding: 1.5rem 1.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  min-height: 180px;
+  position: relative;
+  overflow: hidden;
+}
+
+.widget .widget-icon {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  font-size: 2.2rem;
+  color: var(--accent);
+  opacity: 0.15;
+  pointer-events: none;
+}
+
+.widget-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--primary);
+  margin-bottom: 0.2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.widget-value {
+  font-size: 2.2rem;
+  font-weight: bold;
+  color: var(--text);
+  margin-bottom: 0.5rem;
+}
+
+.widget-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-size: 1rem;
+}
+
+.widget-list li {
+  padding: 0.2rem 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.widget-list li:last-child {
+  border-bottom: none;
+}
+
+.empty-graphic {
+  width: 100%;
+  text-align: center;
+  margin-top: 1.5rem;
+  opacity: 0.5;
+}
+
+.empty-graphic svg {
+  width: 80px;
+  height: 80px;
+  margin-bottom: 0.5rem;
+}
+
+/* Bookings Tab */
+
+.bookings-tab, .staff-tab {
+  padding: 2rem;
+  background: var(--widget-bg);
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(74, 78, 105, 0.07);
+  margin: 1rem 2rem;
+  overflow-x: auto;
+}
+
+.bookings-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.bookings-header h2 {
+  margin: 0;
+  color: var(--primary);
+  font-size: 1.3rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+#filterDate,#filterStatus {
+  padding: 0.4rem 0.6rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  max-width: 200px;
+}
+
+/* Table wrapper for horizontal scroll */
+.table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  border-radius: 8px;
+  box-shadow: 0 2px 12px rgba(74, 78, 105, 0.07);
+  background: var(--widget-bg);
+}
+
+/* Bookings Table */
+
+.table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  border-radius: 8px;
+  box-shadow: 0 2px 12px rgba(74, 78, 105, 0.07);
+  background: var(--widget-bg);
+  margin-top: 1rem;
+}
+
+.bookings-table, .staff-table {
+  width: 100%;
+  min-width: 700px; /* forces horizontal scroll on small screens */
+  border-collapse: collapse;
+}
+
+.bookings-table th, .staff-table th,
+.bookings-table td, .staff-table td {
+  padding: 0.8rem 1rem;
+  text-align: left;
+  border-bottom: 1px solid #f0f0f0;
+  white-space: nowrap;
+}
+
+.bookings-table thead th, .staff-table thead th {
+  background: var(--background);
+  color: var(--primary);
+  font-weight: 600;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+}
+.bookings-table tr:last-child td, .staff-table tr:last-child td {
+  border-bottom: none;
+}
+
+.bookings-table .status-select, .staff-table  {
+  padding: 0.3rem 0.5rem;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  background: #fff;
+  font-size: 0.9rem;
+  min-width: 110px;
+}
+
+.bookings-table  .delete-booking, .delete-staff{
+  background: #e74c3c;
+  color: #fff;
+  border: none;
+  padding: 0.3rem 0.6rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background 0.2s;
+}
+
+.bookings-table .delete-booking:hover, .delete-staff:hover {
+  background: #c0392b;
+}
+
+/* Responsive adjustments */
+
+@media (max-width: 900px) {
+  .dashboard-widgets {
+    grid-template-columns: 1fr;
+    gap: 1.2rem;
+    padding: 1rem;
+  }
+  .sidebar {
+    width: 60px;
+  }
+  .sidebar .logo {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+  }
+  .sidebar nav a span {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .bookings-tab, .staff-tab {
+    margin: 1rem;
+    padding: 1rem;
+	margin: 2rem -1rem 2rem -1rem;
+  }
+  .bookings-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  #filterDate {
+    max-width: 100%;
+    width: 100%;
+  }
+  ..bookings-table-wrapper, .staff-table-wrapper {
+    box-shadow: none;
+    border-radius: 0;
+  }
+  .bookings-table, .staff-table {
+    min-width: 600px;
+  }
+}
+
+/* Large Desktops (≥1200px) */
+@media (min-width: 1200px) {
+  .bookings-tab, .staff-tab {
+    margin: 3rem;
+    padding: 2rem 3rem;
+  }
+}
+
+/* Desktops & Laptops (992px–1199px) */
+@media (max-width: 1199px) {
+  .bookings-tab, .staff-tab {
+    margin: 2rem;
+    padding: 2rem;
+  }
+
+  #filterDate {
+    max-width: 100%;
+  }
+
+  .bookings-table, .staff-table {
+    min-width: 700px;
+  }
+}
+
+/* .bookings-table, .staff-tablets (768px–991px) */
+@media (max-width: 991px) {
+  .bookings-tab, .staff-tab {
+    margin: 2rem 1rem;
+    padding: 1.5rem;
+  }
+
+  .bookings-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .bookings-table, .staff-table {
+    min-width: 650px;
+  }
+}
+
+/* Phones (<768px) */
+@media (max-width: 768px) {
+  .bookings-tab, .bookings-tab {
+    margin: 2rem -1rem;
+    padding: 1rem;
+  }
+
+  .bookings-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  #filterDate {
+    width: 100%;
+  }
+
+  ..bookings-table, .staff-table-wrapper {
+    box-shadow: none;
+    border-radius: 0;
+  }
+
+  .bookings-table, .staff-table {
+    min-width: 600px;
+  }
+}
+
+@media (max-width: 600px) {
+  .dashboard-container {
+    flex-direction: column;
+  }
+  .sidebar {
+    flex-direction: row;
+    width: 100vw;
+    height: 60px;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    z-index: 100;
+    padding: 0;
+  }
+  .sidebar .logo {
+    display: none;
+  }
+  .sidebar nav {
+    flex-direction: row;
+    gap: 0;
+    width: 100vw;
+    justify-content: space-around;
+  }
+  .sidebar nav a {
+    padding: 0.5rem 0.5rem;
+    font-size: 1.2rem;
+    border-left: none;
+    border-bottom: 4px solid transparent;
+  }
+  .sidebar nav a.active,
+  .sidebar nav a:hover {
+    background: var(--accent);
+    border-bottom: 4px solid var(--primary);
+  }
+  .sidebar .logout {
+    margin: 0;
+    border-radius: 50%;
+    width: 44px;
+    height: 44px;
+    font-size: 1.2rem;
+  }
+ 
+  .dashboard-widgets {
+    padding: 0.5rem;
+  }
+}
+@media (max-width: 768px) {
+  ..bookings-table, .staff-table-wrapper {
+    box-shadow: none;
+    border-radius: 0;
+  }
+  .bookings-table, .staff-table {
+    min-width: 600px;
+  }
+  .main-content {
+    padding: 1rem;
+  }
+}
+
+/* Optional: improve focus styles for accessibility */
+.sidebar nav a:focus,
+.sidebar .logout:focus,
+.topbar .quick-actions button:focus,
+.bookings-table .status-select:focus,
+.bookings-table .delete-booking:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* Staff Modal Styles */
+#staffModal {
+  display: none;
+  position: fixed;
+  top: 5%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #fff;
+  padding: 24px 30px;
+  border: 1px solid #ccc;
+  z-index: 1000;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+  width: 500px;
+  max-width: 100vw;
+  border-radius: 8px;
+  overflow-y: auto;
+  max-height: 60vh;
+  font-family: 'Roboto', sans-serif;
+}
+
+/* Reduce space between form inputs */
+#staffForm label {
+  margin-bottom: 6px; /* reduce from larger value if any */
+}
+
+#staffForm input[type="text"],
+#staffForm input[type="email"] {
+  margin-bottom: 10px; /* reduce this value to decrease space */
+  padding: 8px 10px; /* optional: adjust padding for compactness */
+  font-size: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+#staffForm input[type="text"]:focus,
+#staffForm input[type="email"]:focus {
+  border-color: #2980b9;
+  outline: none;
+}
+
+/* Modal buttons */
+#staffForm button {
+  background-color: #2980b9;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 5px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-right: 12px;
+}
+
+#staffForm button:hover {
+  background-color: #1c5980;
+}
+
+#cancelStaffBtn {
+  background-color: #7f8c8d;
+}
+
+#cancelStaffBtn:hover {
+  background-color: #626e70;
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+  #staffModal {
+    top: 10%;
+    width: 95vw;
+    padding: 2px;
+  }
+
+  #staffForm button {
+    width: 100%;
+    margin: 8px 0 0 0;
+  }
+}
+
+
+/* Base button style */
+button {
+  display: inline-block;
+  padding: 10px 18px;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, box-shadow 0.2s ease;
+  font-family: 'Roboto', sans-serif;
+  color: white;
+  user-select: none;
+}
+
+/* Primary button (default) */
+button {
+  background-color: #2980b9;
+}
+
+button:hover,
+button:focus {
+  background-color: #1c5980;
+  outline: none;
+  box-shadow: 0 0 8px rgba(28, 89, 128, 0.6);
+}
+
+/* Secondary button (e.g., cancel) */
+button.secondary,
+button#cancelStaffBtn {
+  background-color: #7f8c8d;
+  color: white;
+}
+
+button.secondary:hover,
+button#cancelStaffBtn:hover,
+button.secondary:focus,
+button#cancelStaffBtn:focus {
+  background-color: #626e70;
+  outline: none;
+  box-shadow: 0 0 8px rgba(98, 110, 112, 0.6);
+}
+
+/* Danger button (e.g., delete) */
+button.danger,
+button.delete {
+  background-color: #c0392b;
+}
+
+button.danger:hover,
+button.delete:hover,
+button.danger:focus,
+button.delete:focus {
+  background-color: #922b21;
+  outline: none;
+  box-shadow: 0 0 8px rgba(146, 43, 33, 0.6);
+}
+
+/* Responsive full-width buttons on small screens */
+@media (max-width: 480px) {
+  button {
+    width: 100%;
+    padding: 12px 0;
+    font-size: 1.1rem;
+  }
+}
+
+/* Hide default checkbox */
+.availability-toggle {
+  position: relative;
+  width: 60px;
+  height: 30px;
+  appearance: none;
+  background-color: #ccc;
+  border-radius: 15px;
+  cursor: pointer;
+  outline: none;
+  transition: background-color 0.3s;
+}
+
+/* Style the toggle switch */
+.availability-toggle::before {
+  content: '';
+  position: absolute;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  top: 2px;
+  left: 2px;
+  background-color: white;
+  transition: transform 0.3s;
+}
+
+/* Checked state */
+.availability-toggle:checked {
+  background-color: #4CAF50; /* Green when checked */
+}
+
+.availability-toggle:checked::before {
+  transform: translateX(30px); /* Move to the right */
+}
+
+/* Profile Tab Container */
+.profile-tab {
+  background: var(--widget-bg);
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(74, 78, 105, 0.07);
+  padding: 2rem;
+  margin: 1rem 2rem;
+  max-height: 80vh;
+  overflow-y: auto;
+  color: var(--text);
+  font-family: 'Roboto', sans-serif;
+}
+
+/* Profile Sub-tabs Buttons Container */
+.profile-tabs {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+/* Profile Sub-tab Buttons */
+.profile-tab-btn {
+  background-color: var(--accent);
+  color: var(--primary);
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+  flex: 1 1 auto;
+  min-width: 140px;
+  text-align: center;
+  user-select: none;
+}
+
+/* Active and Hover States */
+.profile-tab-btn.active,
+.profile-tab-btn:hover {
+  background-color: var(--primary);
+  color: var(--accent);
+  outline: none;
+  box-shadow: 0 0 8px rgba(24, 28, 79, 0.4);
+}
+
+/* Profile Tab Content Sections */
+.profile-tab-content {
+  display: none;
+  margin-top: 1rem;
+}
+
+/* Show active profile tab content */
+.profile-tab-content.active {
+  display: block;
+}
+
+/* Forms inside Profile Tab */
+.profile-tab-content form label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: var(--primary);
+  font-size: 1rem;
+}
+
+.profile-tab-content form input,
+.profile-tab-content form textarea {
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  font-family: 'Roboto', sans-serif;
+  color: var(--text);
+  resize: vertical;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease;
+}
+
+.profile-tab-content form input:focus,
+.profile-tab-content form textarea:focus {
+  border-color: var(--primary);
+  outline: none;
+  box-shadow: 0 0 6px rgba(24, 28, 79, 0.3);
+}
+
+/* Profile Form Buttons */
+.profile-tab-content form button {
+  background-color: var(--primary);
+  color: var(--accent);
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+  user-select: none;
+}
+
+.profile-tab-content form button:hover,
+.profile-tab-content form button:focus {
+  background-color: var(--accent);
+  color: var(--primary);
+  outline: none;
+  box-shadow: 0 0 8px rgba(255, 156, 63, 0.6);
+}
+
+/* Moderators Table */
+#moderatorsTable {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--widget-bg);
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(74, 78, 105, 0.07);
+  overflow: hidden;
+  margin-bottom: 1rem;
+  font-family: 'Roboto', sans-serif;
+}
+
+#moderatorsTable th,
+#moderatorsTable td {
+  padding: 0.75rem 1rem;
+  text-align: left;
+  border-bottom: 1px solid #f0f0f0;
+  font-size: 1rem;
+  color: var(--text);
+  white-space: nowrap;
+}
+
+#moderatorsTable th {
+  background-color: var(--background);
+  color: var(--primary);
+  font-weight: 600;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+}
+
+#moderatorsTable tr:last-child td {
+  border-bottom: none;
+}
+
+#moderatorsTable button {
+  background-color: var(--error);
+  color: var(--accent);
+  border: none;
+  padding: 0.3rem 0.6rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background-color 0.3s ease;
+  user-select: none;
+}
+
+#moderatorsTable button:hover,
+#moderatorsTable button:focus {
+  background-color: #a30000;
+  outline: none;
+  box-shadow: 0 0 8px rgba(217, 4, 41, 0.6);
+}
+
+/* Moderator Modal */
+#moderatorModal {
+  display: none;
+  position: fixed;
+  top: 20%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--widget-bg);
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(74, 78, 105, 0.07);
+  z-index: 3000;
+  width: 90%;
+  max-width: 400px;
+  font-family: 'Roboto', sans-serif;
+  overflow-y: auto;
+  max-height: 60vh;
+}
+
+/* Modal Form */
+#moderatorModal form label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: var(--primary);
+  font-size: 1rem;
+}
+
+#moderatorModal form input {
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  font-family: 'Roboto', sans-serif;
+  color: var(--text);
+  box-sizing: border-box;
+  transition: border-color 0.3s ease;
+}
+
+#moderatorModal form input:focus {
+  border-color: var(--primary);
+  outline: none;
+  box-shadow: 0 0 6px rgba(24, 28, 79, 0.3);
+}
+
+/* Modal Buttons */
+#moderatorModal form button {
+  background-color: var(--primary);
+  color: var(--accent);
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+  user-select: none;
+  margin-right: 1rem;
+}
+
+#moderatorModal form button:hover,
+#moderatorModal form button:focus {
+  background-color: var(--accent);
+  color: var(--primary);
+  outline: none;
+  box-shadow: 0 0 8px rgba(255, 156, 63, 0.6);
+}
+
+/* Cancel button */
+#cancelModeratorBtn {
+  background-color: var(--muted);
+  color: var(--widget-bg);
+}
+
+#cancelModeratorBtn:hover,
+#cancelModeratorBtn:focus {
+  background-color: #556b6b;
+  outline: none;
+  box-shadow: 0 0 8px rgba(110, 139, 139, 0.6);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .profile-tabs {
+    flex-direction: column;
+  }
+
+  .profile-tab-btn {
+    min-width: auto;
+    width: 100%;
+    margin-bottom: 0.75rem;
+  }
+
+  .profile-tab {
+    margin: 1rem;
+    padding: 1rem;
+    max-height: none;
+  }
+
+  #moderatorModal {
+    top: 10%;
+    width: 95vw;
+    padding: 1rem;
+    max-height: 70vh;
+  }
+}
+
+/* Modal background */
+  .modal {
+    position: fixed;
+    z-index: 10000;
+    left: 0; top: 0;
+    width: 100%; height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
